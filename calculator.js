@@ -34,6 +34,30 @@ function divide(operand1, operand2) {
     }
 }
 
+// executes the appropriate math function based on operator
+function operate(operator, operand1, operand2) {
+    let result;
+
+    switch (operator) {
+        case "+":
+            result = add(operand1, operand2);
+            break;
+        
+        case "-":
+            result = subtract(operand1, operand2);
+            break;
+
+        case "×":
+            result = multiply(operand1, operand2);
+            break;
+
+        case "÷":
+            result = divide(operand1, operand2);
+    }
+
+    return result;
+}
+
 // handles the type of button clicked (e.g. number, operator, delete, etc.)
 function handleClick(event) {
     const element = event.target;
@@ -55,6 +79,9 @@ function handleClick(event) {
             case "operator-btn":
                 handleOperatorClick(event);
                 break;
+
+            case "equal-btn":
+                handleEqualClick(event);
         }
     }
 }
@@ -93,14 +120,22 @@ function handleNumberClick(event) {
     }
 }
 
-// sets the selected operand for the operation
+// sets the selected operator for the operation
 function handleOperatorClick(event) {
     if (!isOperand2Entered) {
         const operator = event.target.textContent;
         operation.operator = operator;
+        console.log(operator);
         
         operation.operand1 = +lowerDisplay.textContent;
         upperDisplay.textContent = `${operation.operand1} ${operation.operator}`;
+    }
+}
+
+function handleEqualClick() {
+    if (operation.operator !== "") {
+        const result = operate()
+
     }
 }
 

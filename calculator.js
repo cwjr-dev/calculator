@@ -1,5 +1,7 @@
 "use strict";
 
+const upperDisplay = document.querySelector(".upper-display");
+const lowerDisplay = document.querySelector(".lower-display");
 const buttons = document.querySelector(".buttons");
 
 const operation = {
@@ -40,11 +42,21 @@ function handleClick(event) {
         ].find(cls => element.classList.contains(cls));
 
         switch(btnType) {
-     
-
+            case "all-clear-btn":
+                handleAllClear();
+                break;
         }
     }
 }
 
+// reset the calculator's settings to default values
+function handleAllClear() {
+    operation.operand1 = 0;
+    operation.operator = "";
+    operation.operand2 = 0;
+    
+    upperDisplay.textContent = "";
+    lowerDisplay.textContent = "0";
+}
 
 buttons.addEventListener("click", handleClick);

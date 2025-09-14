@@ -10,6 +10,8 @@ const operation = {
     operand2: 0
 };
 
+let isOperand2Entered = false;
+
 // math operators
 function add(operand1, operand2) {
     return operand1 + operand2;
@@ -47,7 +49,7 @@ function handleClick(event) {
                 break;
             
             case "number-btn":
-                handleNumberClick();
+                handleNumberClick(event);
                 break;
         }
     }
@@ -61,6 +63,20 @@ function handleAllClearClick() {
     
     upperDisplay.textContent = "";
     lowerDisplay.textContent = "0";
+}
+
+// appends the number clicked to the lower display
+function handleNumberClick(event) {
+    if (operation.operator === "") {
+        const number = event.target.textContent;
+
+        if (lowerDisplay.textContent === "0") {
+            lowerDisplay.textContent = number;
+        }
+        else {
+            lowerDisplay.textContent += number;
+        }
+    }
 }
 
 buttons.addEventListener("click", handleClick);

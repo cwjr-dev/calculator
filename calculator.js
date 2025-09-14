@@ -43,14 +43,18 @@ function handleClick(event) {
 
         switch(btnType) {
             case "all-clear-btn":
-                handleAllClear();
+                handleAllClearClick();
+                break;
+            
+            case "number-btn":
+                handleNumberClick();
                 break;
         }
     }
 }
 
 // reset the calculator's settings to default values
-function handleAllClear() {
+function handleAllClearClick() {
     operation.operand1 = 0;
     operation.operator = "";
     operation.operand2 = 0;

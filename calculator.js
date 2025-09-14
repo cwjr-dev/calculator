@@ -51,6 +51,10 @@ function handleClick(event) {
             case "number-btn":
                 handleNumberClick(event);
                 break;
+            
+            case "operator-btn":
+                handleOperatorClick(event);
+                break;
         }
     }
 }
@@ -67,8 +71,9 @@ function handleAllClearClick() {
 
 // appends the number clicked to the lower display
 function handleNumberClick(event) {
+    const number = event.target.textContent;
+
     if (operation.operator === "") {
-        const number = event.target.textContent;
 
         if (lowerDisplay.textContent === "0") {
             lowerDisplay.textContent = number;
@@ -76,6 +81,26 @@ function handleNumberClick(event) {
         else {
             lowerDisplay.textContent += number;
         }
+    }
+    else if (operation.operator !== "") {
+        if (isOperand2Entered) {
+            lowerDisplay.textContent += number;
+        }
+        else {
+            isOperand2Entered = true;
+            lowerDisplay.textContent = number;
+        }
+    }
+}
+
+// sets the selected operand for the operation
+function handleOperatorClick(event) {
+    if (!isOperand2Entered) {
+        const operator = event.target.textContent;
+        operation.operator = operator;
+        
+        operation.operand1 = +lowerDisplay.textContent;
+        upperDisplay.textContent = `${operation.operand1} ${operation.operator}`;
     }
 }
 

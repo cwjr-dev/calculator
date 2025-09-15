@@ -129,13 +129,31 @@ function handleNumberClick(event) {
 
 // sets the selected operator for the operation
 function handleOperatorClick(event) {
-    if (!isOperand2Entered) {
-        const operator = event.target.textContent;
+    const operator = event.target.textContent;
+    
+    if (isOperationComplete) {        
+        operation.operand1 = +lowerDisplay.textContent;
         operation.operator = operator;
-        
+        isOperand2Entered = false;
+        isOperationComplete = false;
+
+        upperDisplay.textContent = `${operation.operand1} ${operation.operator}`;
+    }
+    else if (!isOperand2Entered) {
+        operation.operator = operator;        
         operation.operand1 = +lowerDisplay.textContent;
         upperDisplay.textContent = `${operation.operand1} ${operation.operator}`;
     }
+    else {
+        operation.operand2 = +lowerDisplay.textContent;
+        const result = operate(operation.operator, operation.operand1, operation.operand2);
+        operation.operator = operator;
+
+        operation.operand1 = result;
+        upperDisplay.textContent = `${operation.operand1} ${operation.operator}`;
+        lowerDisplay.textContent = result;
+        isOperand2Entered = false;
+    }    
 }
 
 // calculates and displays a single operation

@@ -11,6 +11,7 @@ const operation = {
 };
 
 let isOperand2Entered = false;
+let isOperationComplete = false;
 
 // math operators
 function add(operand1, operand2) {
@@ -43,7 +44,7 @@ function operate(operator, operand1, operand2) {
             result = add(operand1, operand2);
             break;
         
-        case "-":
+        case "−":
             result = subtract(operand1, operand2);
             break;
 
@@ -94,14 +95,20 @@ function handleAllClearClick() {
     
     upperDisplay.textContent = "";
     lowerDisplay.textContent = "0";
+
+    isOperand2Entered = false;
+    isOperationComplete = false;
 }
 
 // appends the number clicked to the lower display
-function handleNumberClick(event) {
+function handleNumberClick(event) {    
+    if (isOperationComplete) {
+        handleAllClearClick();        
+    }
+    
     const number = event.target.textContent;
 
     if (operation.operator === "") {
-
         if (lowerDisplay.textContent === "0") {
             lowerDisplay.textContent = number;
         }
@@ -125,17 +132,25 @@ function handleOperatorClick(event) {
     if (!isOperand2Entered) {
         const operator = event.target.textContent;
         operation.operator = operator;
-        console.log(operator);
         
         operation.operand1 = +lowerDisplay.textContent;
         upperDisplay.textContent = `${operation.operand1} ${operation.operator}`;
     }
 }
 
+// calculates and displays a single operation
 function handleEqualClick() {
-    if (operation.operator !== "") {
-        const result = operate()
+    if (operation.operator === "") {
+        operation.operand1 = +lowerDisplay.textContent;
+        upperDisplay.textContent = `${operation.operand1} =`;
+    }    
+    else {
+        isOperationComplete = true;
+        operation.operand2 = +lowerDisplay.textContent;
+        upperDisplay.textContent = `${operation.operand1} ${operation.operator} ${operation.operand2} =`;
 
+        const result = operate(operation.operator, operation.operand1, operation.operand2);
+        lowerDisplay.textContent = result;
     }
 }
 

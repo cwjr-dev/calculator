@@ -76,6 +76,10 @@ function handleClick(event) {
             case "clear-btn":
                 handleClearClick();
                 break;
+
+            case "delete-left-btn":
+                handleDeleteLeftClick();
+                break;
             
             case "number-btn":
                 handleNumberClick(event);
@@ -108,6 +112,16 @@ function handleAllClearClick() {
 function handleClearClick() {
     lowerDisplay.textContent = 0;
     isOperand2Entered = false;
+}
+
+// removes the last digit from the lower display number
+function handleDeleteLeftClick() {
+    if (lowerDisplay.textContent !== "0" && lowerDisplay.textContent.length === 1) {
+        lowerDisplay.textContent = 0;
+    }
+    else if (lowerDisplay.textContent.length > 1) {
+        lowerDisplay.textContent = lowerDisplay.textContent.slice(0, -1);          
+    }
 }
 
 // appends the number clicked to the lower display

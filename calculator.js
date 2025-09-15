@@ -72,6 +72,10 @@ function handleClick(event) {
             case "all-clear-btn":
                 handleAllClearClick();
                 break;
+
+            case "clear-btn":
+                handleClearClick();
+                break;
             
             case "number-btn":
                 handleNumberClick(event);
@@ -98,6 +102,12 @@ function handleAllClearClick() {
 
     isOperand2Entered = false;
     isOperationComplete = false;
+}
+
+// sets the current operand being built to 0
+function handleClearClick() {
+    lowerDisplay.textContent = 0;
+    isOperand2Entered = false;
 }
 
 // appends the number clicked to the lower display

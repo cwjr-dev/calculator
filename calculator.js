@@ -111,7 +111,8 @@ function handleAllClearClick() {
     
     upperDisplay.textContent = "";
     lowerDisplay.textContent = "0";
-
+    
+    adjustLowerDisplayFontSize();
     isOperand2Entered = false;
     isOperationComplete = false;
 }
@@ -119,6 +120,7 @@ function handleAllClearClick() {
 // sets the current operand being built to 0
 function handleClearClick() {
     lowerDisplay.textContent = 0;
+    adjustLowerDisplayFontSize();
     isOperand2Entered = false;
 }
 
@@ -130,6 +132,8 @@ function handleDeleteLeftClick() {
     else if (lowerDisplay.textContent.length > 1) {
         lowerDisplay.textContent = lowerDisplay.textContent.slice(0, -1);          
     }
+
+    adjustLowerDisplayFontSize();
 }
 
 // appends the number clicked to the lower display
@@ -157,6 +161,8 @@ function handleNumberClick(event) {
             lowerDisplay.textContent = number;
         }
     }
+
+    adjustLowerDisplayFontSize();
 }
 
 // sets the selected operator for the operation
@@ -184,21 +190,24 @@ function handleOperatorClick(event) {
         operation.operand1 = result;
         upperDisplay.textContent = `${operation.operand1} ${operation.operator}`;
         lowerDisplay.textContent = result;
-        isOperand2Entered = false;
+        isOperand2Entered = false;        
+        adjustLowerDisplayFontSize();
     }    
 }
 
 // set the lower display number to either positive or negative
 function handlePlusMinusClick() {
     if (lowerDisplay.textContent !== "0") {
-        lowerDisplay.textContent = +lowerDisplay.textContent * -1;
+        lowerDisplay.textContent = +lowerDisplay.textContent * -1;        
+        adjustLowerDisplayFontSize();
     }
 }
 
 // appends a decimal point to the current number if it doesn't already contain one
 function handleDecimalClick() {
     if (!lowerDisplay.textContent.includes(".")) {
-        lowerDisplay.textContent += ".";
+        lowerDisplay.textContent += ".";        
+        adjustLowerDisplayFontSize();
     }
 }
 
@@ -215,7 +224,20 @@ function handleEqualClick() {
 
         const result = operate(operation.operator, operation.operand1, operation.operand2);
         lowerDisplay.textContent = result;
+        adjustLowerDisplayFontSize();
     }
+}
+
+// controls the font size of the lower display
+function adjustLowerDisplayFontSize() {
+  const numberLength = lowerDisplay.textContent.length;
+  const defaultSize = 45; // px
+  const minSize = 20;     // px
+
+  // shrink 2px per extra digit beyond 12, clamp to minSize
+  const newSize = Math.max(minSize, defaultSize - 2.8 * Math.max(0, numberLength - 12));
+
+  lowerDisplay.style.fontSize = newSize + "px";
 }
 
 buttons.addEventListener("click", handleClick);

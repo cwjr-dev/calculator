@@ -92,6 +92,10 @@ function handleClick(event) {
             case "plus-minus-btn":
                 handlePlusMinusClick();
                 break;
+            
+            case "decimal-btn":
+                handleDecimalClick();
+                break;
 
             case "equal-btn":
                 handleEqualClick(event);
@@ -188,6 +192,13 @@ function handleOperatorClick(event) {
 function handlePlusMinusClick() {
     if (lowerDisplay.textContent !== "0") {
         lowerDisplay.textContent = +lowerDisplay.textContent * -1;
+    }
+}
+
+// appends a decimal point to the current number if it doesn't already contain one
+function handleDecimalClick() {
+    if (!lowerDisplay.textContent.includes(".")) {
+        lowerDisplay.textContent += ".";
     }
 }
 

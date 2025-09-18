@@ -15,13 +15,13 @@ body {
 }
 
 .calculator {
-    border: 1px solid black;
     border-radius: 5px;
     height: 60%;
     width: 340px;
     display: flex;
     flex-direction: column;
     background-color: #1b263b;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .display {
@@ -29,13 +29,14 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
 }
 .upper-display,
 .lower-display {
     flex: 1;
     display: flex;
     align-items: flex-end;
-    justify-content: flex-end;
+    justify-content: flex-end;    
 }
 
 .upper-display {
@@ -45,8 +46,8 @@ body {
 
 .lower-display {
     color: white;
-    font-size: 40px;
-    font-weight: bold;    
+    font-size: 45px;
+    font-weight: bold;
 }
 
 .buttons {    
@@ -111,4 +112,5 @@ button {
     background-color: #e0e1dd;
     color: white;
     font-weight: bold;
+    box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;
 }

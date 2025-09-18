@@ -89,6 +89,10 @@ function handleClick(event) {
                 handleOperatorClick(event);
                 break;
 
+            case "plus-minus-btn":
+                handlePlusMinusClick();
+                break;
+
             case "equal-btn":
                 handleEqualClick(event);
         }
@@ -178,6 +182,13 @@ function handleOperatorClick(event) {
         lowerDisplay.textContent = result;
         isOperand2Entered = false;
     }    
+}
+
+// set the lower display number to either positive or negative
+function handlePlusMinusClick() {
+    if (lowerDisplay.textContent !== "0") {
+        lowerDisplay.textContent = +lowerDisplay.textContent * -1;
+    }
 }
 
 // calculates and displays a single operation

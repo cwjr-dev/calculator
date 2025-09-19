@@ -31,6 +31,7 @@ function divide(operand1, operand2) {
         return operand1 / operand2;
     }
     else {
+
         return "Can't divide by 0";
     }
 }
@@ -68,6 +69,8 @@ function handleClick(event) {
             "plus-minus-btn", "decimal-btn", "equal-btn"
         ].find(cls => element.classList.contains(cls));
 
+        const btnText = element.textContent;
+
         switch(btnType) {
             case "all-clear-btn":
                 handleAllClearClick();
@@ -82,11 +85,11 @@ function handleClick(event) {
                 break;
             
             case "number-btn":
-                handleNumberClick(event);
+                handleNumberClick(btnText);
                 break;
             
             case "operator-btn":
-                handleOperatorClick(event);
+                handleOperatorClick(btnText);
                 break;
 
             case "plus-minus-btn":
@@ -98,7 +101,7 @@ function handleClick(event) {
                 break;
 
             case "equal-btn":
-                handleEqualClick(event);
+                handleEqualClick();
         }
     }
 }
@@ -137,12 +140,10 @@ function handleDeleteLeftClick() {
 }
 
 // appends the number clicked to the lower display
-function handleNumberClick(event) {    
+function handleNumberClick(number) {
     if (isOperationComplete) {
-        handleAllClearClick();        
+        handleAllClearClick();
     }
-    
-    const number = event.target.textContent;
 
     if (operation.operator === "") {
         if (lowerDisplay.textContent === "0") {
@@ -166,9 +167,7 @@ function handleNumberClick(event) {
 }
 
 // sets the selected operator for the operation
-function handleOperatorClick(event) {
-    const operator = event.target.textContent;
-    
+function handleOperatorClick(operator) {
     if (isOperationComplete) {        
         operation.operand1 = +lowerDisplay.textContent;
         operation.operator = operator;
@@ -240,4 +239,17 @@ function adjustLowerDisplayFontSize() {
   lowerDisplay.style.fontSize = newSize + "px";
 }
 
+function handleKeyDown(event) {
+    console.log(event.target);
+    
+    const keyPressed = event.key;
+
+    // numbers
+    if (typeof keyPressed === "number") {
+        handleNumberClick(keyPressed);
+    }
+    // else if (["+", "-", "×", "/"].includes[""])
+}
+
+document.addEventListener("keydown", handleKeyDown);
 buttons.addEventListener("click", handleClick);

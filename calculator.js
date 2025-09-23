@@ -22,7 +22,7 @@ function subtract(operand1, operand2) {
     return operand1 - operand2;
 }
 
-function multiply(operand1, operand2) {
+function multiply(operand1, operand2) {      
     return operand1 * operand2;
 }
 
@@ -50,10 +50,12 @@ function operate(operator, operand1, operand2) {
             break;
 
         case "×":
+        case "*":
             result = multiply(operand1, operand2);
             break;
 
         case "÷":
+        case "/":
             result = divide(operand1, operand2);
     }
 
@@ -145,22 +147,27 @@ function handleNumberClick(number) {
         handleAllClearClick();
     }
 
-    if (operation.operator === "") {
-        if (lowerDisplay.textContent === "0") {
-            lowerDisplay.textContent = number;
-        }
-        else {
-            lowerDisplay.textContent += number;
-        }
-    }
-    else if (operation.operator !== "") {
+    if (operation.operator) {
         if (isOperand2Entered) {
-            lowerDisplay.textContent += number;
+            if (lowerDisplay.textContent === "0") {
+                lowerDisplay.textContent = number;
+            }
+            else {
+                lowerDisplay.textContent += number;
+            }
         }
         else {
             isOperand2Entered = true;
             lowerDisplay.textContent = number;
         }
+    }
+    else {
+        if (lowerDisplay.textContent === "0") {
+                lowerDisplay.textContent = number;
+            }
+        else {
+                lowerDisplay.textContent += number;
+            }
     }
 
     adjustLowerDisplayFontSize();
@@ -168,7 +175,8 @@ function handleNumberClick(number) {
 
 // sets the selected operator for the operation
 function handleOperatorClick(operator) {
-    if (isOperationComplete) {        
+
+    if (isOperationComplete) {
         operation.operand1 = +lowerDisplay.textContent;
         operation.operator = operator;
         isOperand2Entered = false;
@@ -176,22 +184,22 @@ function handleOperatorClick(operator) {
 
         upperDisplay.textContent = `${operation.operand1} ${operation.operator}`;
     }
-    else if (!isOperand2Entered) {
-        operation.operator = operator;        
-        operation.operand1 = +lowerDisplay.textContent;
-        upperDisplay.textContent = `${operation.operand1} ${operation.operator}`;
-    }
-    else {
+    else if (isOperand2Entered) {
         operation.operand2 = +lowerDisplay.textContent;
         const result = operate(operation.operator, operation.operand1, operation.operand2);
         operation.operator = operator;
-
+    
         operation.operand1 = result;
         upperDisplay.textContent = `${operation.operand1} ${operation.operator}`;
         lowerDisplay.textContent = result;
         isOperand2Entered = false;        
         adjustLowerDisplayFontSize();
-    }    
+    }
+    else {
+        operation.operator = operator;        
+        operation.operand1 = +lowerDisplay.textContent;
+        upperDisplay.textContent = `${operation.operand1} ${operation.operator}`;
+    }
 }
 
 // set the lower display number to either positive or negative
@@ -239,16 +247,41 @@ function adjustLowerDisplayFontSize() {
   lowerDisplay.style.fontSize = newSize + "px";
 }
 
-function handleKeyDown(event) {
-    console.log(event.target);
-    
-    const keyPressed = event.key;
+function handleKeyDown(event) {    
+    let keyPressed = event.key;    
 
-    // numbers
-    if (typeof keyPressed === "number") {
+    if (!isNaN(Number(keyPressed))) {
         handleNumberClick(keyPressed);
     }
-    // else if (["+", "-", "×", "/"].includes[""])
+    else if (["+", "-", "*", "/"].includes(keyPressed)) {
+        // convert selected operator into correct symbol 
+        switch (keyPressed) {
+            case "-":
+                keyPressed = "−";
+                break;
+            
+            case "*":
+                keyPressed = "×";
+                break;
+
+            case "/":
+                keyPressed = "÷";
+                break;
+        }
+        handleOperatorClick(keyPressed);
+    }
+    else if (keyPressed === ".") {
+        handleDecimalClick();
+    }
+    else if (keyPressed === "Delete") {
+        handleClearClick();
+    }
+    else if (keyPressed === "Backspace") {
+        handleDeleteLeftClick();
+    }
+    else if (keyPressed === "Enter") {
+        handleEqualClick();
+    }
 }
 
 document.addEventListener("keydown", handleKeyDown);

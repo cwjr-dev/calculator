@@ -12,6 +12,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 20px;
 }
 
 .calculator {
@@ -113,4 +114,23 @@ button {
     color: white;
     font-weight: bold;
     box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;
+}
+
+.shortcuts {      
+      border: 1px solid #ccc;
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 5px;
+}
+
+.shortcuts p {
+    margin: 10px 0;
+}
+
+.shortcuts kbd {
+      background: #eee;
+      border: 1px solid #ccc;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-family: monospace;
 }

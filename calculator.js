@@ -273,6 +273,9 @@ function handleKeyDown(event) {
     else if (keyPressed === ".") {
         handleDecimalClick();
     }
+    else if (keyPressed === "Escape") {
+        handleAllClearClick();
+    }
     else if (keyPressed === "Delete") {
         handleClearClick();
     }
